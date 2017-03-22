@@ -1,0 +1,16 @@
+machine:
+  services:
+    - docker
+dependencies:
+  override:
+    - docker info
+    - docker build --rm=false -t bendonnaloia/cannablr-postgres:latest .
+test:
+  override:
+    - echo "skipping tests"
+deployment:
+  hub:
+    branch: master
+    commands:
+      - docker login -e $dockeremail -u $dockeruser -p $dockerpassword
+      - docker push bendonnaloia/cannablr-postgres
